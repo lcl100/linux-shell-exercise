@@ -4,6 +4,7 @@
 ###################################################################
 # Script Name : install-jdk.sh
 # Description : Allows you to quickly install and configure the JDK.
+# Note: No any notes.
 # Args : "$1" - JDK installation directory.
 # Usage : ./install-jdk.sh  /opt/jdk8/jdk1.8.0_291
 # Author : lcl100
