@@ -6,3 +6,5 @@ Linux Shell 练习题目
 - `exercise-scripts`：shell 练习题对应的脚本文件。
 - `work`：实际工作中用到的脚本说明文档。
 - `work-scripts`：实际工作中用到的脚本文件。
+- `util`：封装的公共函数脚本说明文档。
+- `util-scripts`：封装的公共函数脚本文件。
