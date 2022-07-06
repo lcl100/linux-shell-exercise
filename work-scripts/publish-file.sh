@@ -7,7 +7,6 @@
 # 第四步，如果该文件存在于远程服务器中则进行删除，但保存该文件通过find命令查出来的路径
 # 第五步，再通过scp命令将该文件复制到远程服务器指定路径中
 
-
 # 如下配置项都是可以自定义进行修改的
 # 设置存放待部署文件的文件夹名
 PUBLISH_DIR="/root/.ssh/publish-files"
@@ -233,7 +232,7 @@ function publish_remote_file() {
 # 脚本入口函数
 main() {
   # 调用函数，部署 ${PUBLISH_DIR} 中的文件到本地服务器指定目录下中
-  publish_local_file "PUBLISH_DIR"
+  publish_local_file "${PUBLISH_DIR}"
 
   # 部署到远程服务器上，循环 ${HOSTS_PATH} 中的所有远程服务器IP地址，一一调用函数进行部署
   if [ -f "${HOSTS_PATH}" ]; then
