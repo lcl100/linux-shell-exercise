@@ -90,3 +90,5 @@ awk 'NR>=5{print $0}' nowcoder.txt
 ```shell
 tac nowcoder.txt | head -n 5 | tac
 ```
+
+>注：实际上在该网站提交报错，原因未知。
