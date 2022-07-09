@@ -12,14 +12,28 @@ tangmiao-pc       5336   0.0  1.4  9100240 238544   ??  S     3:09下午   0:31.
 
 以上内容是通过 `ps aux | grep -v 'RSS TTY'` 命令输出到 `nowcoder.txt` 文件下面的。 请你写一个脚本计算一下所有进程占用内存大小的和。
 
+
+
+
+
 ## 脚本一
+
+第六列表示进程所占内存，所以使用 `awk` 命令单独提取第六列的内容；再计算提取出来后所有行的总和。
+
 ```shell
 awk '{print $6}' nowcoder.txt | awk 'BEGIN{sum=0.0} {sum+=$0} END{print sum}'
 # 简化后的结果
 awk '{sum+=$6} END{print sum}' nowcoder.txt
 ```
 
+
+
+
+
 ## 脚本二
+
+一样的原理，只是通过 `while` 循环来遍历文件中的每一行；再通过 `awk` 命令提取第六列内容；通过 `$(( ))` 来进行数学运算。
+
 ```shell
 #!/bin/bash
 
