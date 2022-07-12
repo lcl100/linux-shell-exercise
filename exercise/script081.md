@@ -33,24 +33,49 @@
 ```
 
 
+
+
+
 ## 脚本一
+
+通过正则表达式提取2020年04月23日20-23点的记录行；然后通过 `awk` 命令提取第一列，即 IP 地址列；再通过 `sort` 命令排序；`uniq` 命令去重；最后 `wc` 命令统计行数，即访问量。
+
 ```shell
 grep "23/Apr/2020:2[0-3]" nowcoder.txt | awk '{print $1}' | sort | uniq | wc -l
 ```
 
 
+
+
+
 ## 脚本二
+
+跟脚本一原理一样，只不过第一步是通过 `awk` 命令完成的筛选。
+
 ```shell
 awk '/23\/Apr\/2020:2[0-3]/{print $1}' nowcoder.txt | sort | uniq | wc -l
 ```
 
+
+
+
+
 ## 脚本三
+
 ```shell
+#!/bin/bash
+
+# 声明关联数组
 declare -A map
-while read line
-    do
-        a=($line)
-        [[ ${a[3]} =~ 23/Apr/2020:2[0-2] ]] && ((map["${a[0]}"]++))
-    done < nowcoder.txt
+
+# 循环读取文件中的每一行
+while read line; do
+	# 转换成数组
+	a=($line)
+	# 如果该行的日期是2020年04月23日20-23点，那么则将IP地址存入到关联数组中，并统计出现次数
+	[[ ${a[3]} =~ 23/Apr/2020:2[0-2] ]] && ((map["${a[0]}"]++))
+done < nowcoder.txt
+
+# 最后打印关联数组的长度
 printf "${#map[*]}"
 ```
