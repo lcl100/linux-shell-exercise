@@ -33,19 +33,37 @@
 ```
 
 
+
+
+
 ## 脚本一
+
+先通过 `grep` 命令查找到有百度地址的记录行；然后再通过 `grep -c` 命令统计这些行中出现了 404 的行数。
+
 ```shell
 grep "www.baidu.com/search/spider.html" nowcoder.txt | grep -c "404" 
 ```
 
 
+
+
+
 ## 脚本二
+
+直接使用 `grep -c -E` 命令通过正则表达式匹配百度爬虫抓取 404 的行数。
+
 ```shell
 grep -c -E "404.*www.baidu.com/search/spider.html" nowcoder.txt 
 ```
 
 
+
+
+
 ## 脚本三
+
+通过 `awk` 命令来匹配正则表达式行，并打印行数。
+
 ```shell
 awk '/404.*www.baidu.com\/search\/spider.html/{print NR}' nowcoder.txt | wc -l
 ```
