@@ -56,13 +56,24 @@ LISTEN 3
 
 
 
+
+
 ## 脚本一
+
+通过 `grep` 命令检索 tcp 连接行；然后使用 `awk` 命令提取第六列，表示各个连接的状态；再使用 `sort` 命令排序，让重复的行相邻；使用 `uniq -c` 命令去除并统计各个状态连接的出现次数；再通过 `sort` 命令降序排列；最后通过 `awk` 调整显示列顺序，让状态名在第一列显示，第二列显示连接数。
+
 ```shell
 grep "tcp" nowcoder.txt | awk '{print $6}' | sort | uniq -c | sort -nr | awk '{print $2,$1}'
 ```
 
 
+
+
+
 ## 脚本二
+
+通过关联数组来实现，将各个状态和该状态的连接数放进关联数组中；接着在 `END{}` 中循环遍历关联数组，打印状态名和状态表示的连接数；最后通过 `sort` 命令对第二列进行倒序排列。
+
 ```shell
 awk '/tcp/{map[$6]++} END{for(k in map) print k,map[k]}' nowcoder.txt | sort -nr -k 2
 ```
