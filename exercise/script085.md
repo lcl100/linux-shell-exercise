@@ -42,13 +42,25 @@
 ```
 
 
+
+
+
 ## 脚本一
+
+通过 `awk` 命令查找文本行表示小时和分钟的列；再通过 `sort` 命令排序；`uniq -c` 去重并统计出现次数；最后通过 `sed` 命令去除行首的空格。
+
 ```shell
 awk -F ":" '{print $2":"$3}' nowcoder.txt | sort | uniq -c | sort -nr | sed 's/[ \t]*//'
 ```
 
 
+
+
+
 ## 脚本二
+
+通过关联数组完成，将小时和分钟组成的字符串放进关联数组中，并统计其出现次数；然后在 `END{}` 中循环遍历关联数组打印请求数和分钟；最后通过 `sort` 命令降序排序。
+
 ```shell
 awk -F ":" '{map[$2":"$3]++} END{for(k in map) print map[k],k}' nowcoder.txt | sort -nr
 ```
