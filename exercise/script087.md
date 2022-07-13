@@ -54,13 +54,25 @@ raw6       0      0 :::58                   :::*                    7
 ```
 
 
+
+
+
 ## 脚本一
+
+使用 `grep` 命令查找 3306 端口建立的连接并且连接状态是 `ESTABLISHED` 的记录行；然后使用 `awk` 命令提取第五列；再通过 `cut` 命令提取 IP 地址（即去除端口号）；通过 `sort` 命令排序；`uniq -c` 去重并统计出现次数；再通过 `sort` 命令按降序排列；最后通过 `sed` 命令去除行首空格。
+
 ```shell
 grep ":3306.*ESTABLISHED" nowcoder.txt | awk '{print $5}' | cut -d ":" -f 1 | sort | uniq -c | sort -nr | sed 's/[ \t]*//'
 ```
 
 
+
+
+
 ## 脚本二
+
+通过 `awk` 命令编程和关联数组来完成；其中 `/:3306.*ESTABLISHED/` 用来查找 3306 端口建立的连接并且连接状态是 `ESTABLISHED` 的记录行；在 `{}` 中将 IP 地址和出现次数存入到关联数组中；然后在 `END{}` 中循环打印关联数组，输出出现次数和 IP 地址；最后通过 `sed` 命令去除统计行中的 3306 端口号；`sort` 命令按降序排列。
+
 ```shell
 awk '/:3306.*ESTABLISHED/{map[$5]++} END{for(k in map) print map[k],k}' nowcoder.txt | sed 's/:3306//' | sort -nr
 ```
