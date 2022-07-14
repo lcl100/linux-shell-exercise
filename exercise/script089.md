@@ -58,26 +58,45 @@ TOTAL_LINK 20
 ```
 
 
+
+
+
 ## 脚本一
+
+通过 `grep` 命令使用正则表达式匹配正确行，再使用 `awk` 命令提取指定列，最后使用 `wc` 命令统计行数。
+
 ```shell
+#!/bin/bash
+
 total_ip_count=$(grep ":3306" nowcoder.txt | awk '{print $5}' | sed 's/:3306//' | sort | uniq | wc -l)
 established_count=$(grep -E ":3306.*ESTABLISHED" nowcoder.txt | awk '{print $5}' | wc -l)
 total_link_count=$(grep -E ":3306.*ESTABLISHED" nowcoder.txt | wc -l)
 
 echo "TOTAL_IP ${total_ip_count}"
 echo "ESTABLISHED ${established_count}"
-echo "TOTAL_LINK $(total_link_count)"
+echo "TOTAL_LINK ${total_link_count}"
 ```
 
 
+
+
+
 ## 脚本二
+
+使用 `awk` 命令编程实现。
+
 ```shell
 awk '{
+	# 如果第一个字段是 tcp，并且 第五个字段包含字符串 3306
     if ($1 == "tcp" && $5 ~ /3306/) {
+    	# 则判断第六个字段是否是 ESTABLISHED 状态
         if ($6 == "ESTABLISHED") {
+        	# 该变量记录 ESTABLISHED 的出现次数
             es++
         }
+        # 记录总连接数
         ans++
+        # 用关联数组记录不重复 IP，数组的长度就是 IP 的个数，这里元素值为零没有实际含义
         arr[$5]=0
     }
 } END {
