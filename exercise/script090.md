@@ -20,8 +20,16 @@ osVersion:10
 ```
 
 
+
+
+
 ## 脚本一
+
+使用 `grep` 匹配符合指定正则表达式的行，然后使用 `sed` 命令删除多余的字符串，则剩下的就是我们需要的结果。
+
 ```shell
+#!/bin/bash
+
 server_version=$(grep "Server version:" nowcoder.txt | sed 's/.*Server version://')
 server_name=$(grep "Server number:" nowcoder.txt | sed 's/.*Server number://')
 os_name=$(grep "OS Name:" nowcoder.txt | sed 's/.*OS Name://' | sed 's/,.*//')
@@ -34,12 +42,21 @@ echo "osVersion:${os_version}"
 ```
 
 
+
+
+
 ## 脚本二
+
+使用 `awk` 命令编程实现。
+
 ```shell
+# 通过 冒号字符和逗号字符 进行分割
 awk -F "[:,]" '{
+	# 如果该行包含字符串 Server version，则提取第四个字段输出
     if($0~"Server version"){
         print "serverVersion:" $4;
     }
+    # 同理
     if($0~"Server number"){
         print "serverName:" $4;
     }
