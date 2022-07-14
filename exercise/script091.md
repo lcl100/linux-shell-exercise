@@ -54,8 +54,16 @@ VSZ_SUM:3250.8M,RSS_SUM:179.777M
 ```
 
 
+
+
+
 ## 脚本一
+
+第五列表示 VSZ，第六列表示 RSS；使用 `grep -E` 只提取数字行，即去掉标题行，因为无法参与运算；最后使用 `awk` 命令循环每行进行总和的计算，最后除以 1024 将单位转换成兆。
+
 ```shell
+#!/bin/bash
+
 vsz_sum=$(awk '{print $5}' nowcoder.txt | grep -E "[0-9]+" | awk '{sum+=$0} END{print sum/1024}')
 rss_sum=$(awk '{print $6}' nowcoder.txt | grep -E "[0-9]+" | awk '{sum+=$0} END{print sum/1024}')
 
@@ -64,7 +72,13 @@ echo "VSZ_SUM:${vsz_sum}M,RSS_SUM:${rss_sum}M"
 ```
 
 
+
+
+
 ## 脚本二
+
+直接利用 `awk` 命令编程实现。
+
 ```shell
-awk '/[0-9]+/{vsz_sum+=$5;rss_sum+=$6} END{printf("MEM TOTAL\nVSZ_SUM:%.3fM,RSS_SUM:%.1fM\n",vsz_sum/1024,rss_sum/1024)}' nowcoder.txt
+awk '/[0-9]+/{vsz_sum+=$5;rss_sum+=$6} END{printf("MEM TOTAL\nVSZ_SUM:%.1fM,RSS_SUM:%.3fM\n",vsz_sum/1024,rss_sum/1024)}' nowcoder.txt
 ```
