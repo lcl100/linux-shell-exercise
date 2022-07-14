@@ -65,13 +65,25 @@ raw6       0      0 :::58                   :::*                    7
 ```
 
 
+
+
+
 ## 脚本一
+
+使用 `grep` 命令查找 tcp 连接的记录行；然后使用 `awk` 命令提取第五列，即 IP 地址列；使用 `sed` 命令删除掉每行中冒号及之后的内容，只保留 IP 地址；然后使用 `sort` 命令排序；`uniq -c` 去重并统计次数；`awk` 命令调整显示顺序，让 IP 地址显示在第一列，出现次数显示在第二列；最后使用 `sort` 命令安装第二列降序排列。
+
 ```shell
 grep -E "(LISTEN|ESTABLISHED|TIME_WAIT)" nowcoder.txt | awk '{print $5}' | sed 's/:.*//' | sort | uniq -c | awk '{print $2,$1}' | sort -nr -k 2
 ```
 
 
+
+
+
 ## 脚本二
+
+使用 `awk` 命令编程和关联数组实现。`awk` 命令的 `split` 函数的语法是：`split(str, arr, sep)`，即分割字符串 `str` 转换成使用分隔符 `sep` 分割后的一个数组 `arr`。第五列即 IP 地址和端口号列，用 `split` 函数通过冒号进行分割，那么分割后的数组中的第一个元素就是 IP 地址，然后在关联数组中存储 IP 地址和它的出现次数。最后在 `END{ }` 中循环输出关联数组的 IP 地址和出现次数；再对最终结果通过 `sort` 命令按照出现次数降序排列。
+
 ```shell
 awk '/tcp/{
   split($5, a, ":")
