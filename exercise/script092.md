@@ -1,6 +1,8 @@
 # script092
 ## 题目
 
+> 注：题目来源于 [SHELL16 判断输入的是否为IP地址 ](https://www.nowcoder.com/practice/ad7b6dbfab2a4267a9991110c57aa64f?tpId=195&tags=&title=&difficulty=&judgeStatus=&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195&gioEnter=menu)。
+
 写一个脚本统计文件nowcoder.txt中的每一行是否是正确的IP地址。
 - 如果是正确的IP地址输出：yes
 - 如果是错误的IP地址，四段号码的话输出：no，否则的话输出：error

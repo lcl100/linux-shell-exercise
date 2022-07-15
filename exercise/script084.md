@@ -1,6 +1,8 @@
 # script084
 ## 题目
 
+> 注：题目来源于 [SHELL27 nginx日志分析5-统计爬虫抓取404的次数 ](https://www.nowcoder.com/practice/3a3573822a854710a259d89066aad695?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设 nginx 的日志我们存储在 nowcoder.txt 里，格式如下：
 ```text
 192.168.1.20 - - [21/Apr/2020:14:12:49 +0800] "GET /1/index.php HTTP/1.1" 301 490 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:45.0) Gecko/20100101 Firefox/45.0"

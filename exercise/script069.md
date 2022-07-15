@@ -1,6 +1,8 @@
 # script069
 ## 题目
 
+> 注：题目来源于 [SHELL11 转置文件的内容 ](https://www.nowcoder.com/practice/2240cd809c8f4d80b3479d7c95bb1e2e?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash 脚本来转置文本文件 `nowcoder.txt` 中的文件内容。
 
 为了简单起见，你可以假设：

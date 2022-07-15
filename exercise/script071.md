@@ -1,6 +1,8 @@
 # script071
 ## 题目
 
+> 注：题目来源于 [SHELL13 去掉所有包含this的句子 ](https://www.nowcoder.com/practice/2c5a46ef755a4f099368f7588361a8af?tpId=195&tags=&title=&difficulty=&judgeStatus=&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195&gioEnter=menu)。
+
 写一个 bash 脚本以实现一个需求，去掉输入中含有 `this` 的语句，把不含 `this` 的语句输出。
 
 示例，假设输入如下：

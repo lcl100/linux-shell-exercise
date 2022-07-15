@@ -1,6 +1,8 @@
 # script078
 ## 题目
 
+> 注：题目来源于 [SHELL21 格式化输出](https://www.nowcoder.com/practice/d91a06bfaff443928065e611b14a0e95?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 我们有一个文件 `nowcoder.txt`，里面的每一行都是一个数字串，假设数字串为 `"123456789"`，那么我们要输出为 `123,456,789`。
 
 假设 `nowcoder.txt` 内容如下：

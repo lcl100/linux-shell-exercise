@@ -1,6 +1,8 @@
 # script070
 ## 题目
 
+> 注：题目来源于 [SHELL12 打印每一行出现的数字个数 ](https://www.nowcoder.com/practice/2d2a124f98054292aef71b453e705ca9?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash 脚本以统计一个文本文件 `nowcoder.txt` 中每一行出现的 `1,2,3,4,5` 数字个数并且要计算一下整个文档中一共出现了几个 `1,2,3,4,5`  数字的数字总数。
 
 示例，假设 `nowcoder.txt` 内容如下：

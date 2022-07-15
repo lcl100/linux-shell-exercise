@@ -1,6 +1,8 @@
 # script081
 ## 题目
 
+> 注：题目来源于 [SHELL24 nginx日志分析2-统计某个时间段的IP ](https://www.nowcoder.com/practice/ddbdd73859fa4fd48bbae7dd2e55f4b9?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设 nginx 的日志我们存储在 nowcoder.txt 里，格式如下：
 
 ```text

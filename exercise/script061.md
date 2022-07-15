@@ -1,6 +1,8 @@
 # script061
 ## 题目
 
+> 题目来源于 [SHELL3 输出7的倍数 ](https://www.nowcoder.com/practice/8b85768394304511b0eb887244e51872?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash 脚本以输出数字 0 到 500 中 7 的倍数(0 7 14 21...)的命令。
 
 

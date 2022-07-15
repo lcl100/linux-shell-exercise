@@ -1,6 +1,8 @@
 # script068
 ## 题目
 
+> 注：题目来源于 [SHELL10 第二列是否有重复 ](https://www.nowcoder.com/practice/61b79ffe88964c7ab7b98ae16dd76492?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 给定一个 `nowcoder.txt` 文件，其中有 `3` 列信息，如下实例，编写一个 shell 脚本来检查文件第二列是否有重复，且有几个重复，并提取出重复的行的第二列信息。实例：
 ```text
 20201001 python 99

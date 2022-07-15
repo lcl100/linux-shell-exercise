@@ -1,6 +1,8 @@
 # script066
 ## 题目
 
+> 题目来源于 [SHELL8 统计所有进程占用内存大小的和 ](https://www.nowcoder.com/practice/fb24140bac154e5b99e44e0cee45dcaf?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设 `nowcoder.txt` 内容如下：
 ```text
 root         2  0.0  0.0      0     0 ?        S    9月25   0:00 [kthreadd]

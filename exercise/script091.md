@@ -1,6 +1,8 @@
 # script091
 ## 题目
 
+> 注：题目来源于 [SHELL34 ps分析-统计VSZ,RSS各自总和](https://www.nowcoder.com/practice/7094b5f96e1a4c998ce01baf407beee6?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设命令运行的结果我们存储在 `nowcoder.txt` 里，格式如下：
 ```text
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND

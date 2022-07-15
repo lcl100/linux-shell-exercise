@@ -1,6 +1,8 @@
 # script073
 ## 题目
 
+> 注：题目来源于 [SHELL15 去掉不需要的单词 ](https://www.nowcoder.com/practice/838a3acde92c4805a22ac73ca04e503b?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash脚本以实现一个需求，去掉输入中的含有 B 和 b 的单词。示例：
 
 假设输入如下：

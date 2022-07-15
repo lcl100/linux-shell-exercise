@@ -1,6 +1,8 @@
 # script064
 ## 题目
 
+> 题目来源于 [SHELL6 去掉空行 ](https://www.nowcoder.com/practice/0372acd5725d40669640fd25e9fb7b0f?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash 脚本以去掉一个文本文件 `nowcoder.txt` 中的空行。
 
 示例，假设 nowcoder.txt 内容如下：

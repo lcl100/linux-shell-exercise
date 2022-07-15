@@ -1,6 +1,8 @@
 # script062
 ## 题目
 
+> 题目来源于 [SHELL4 输出第5行的内容](https://www.nowcoder.com/practice/1d5978c6136d4252904757b4fa0c9296?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash脚本以输出一个文本文件 `nowcoder.txt` 中第5行的内容。
 
 示例， 假设 `nowcoder.txt` 内容如下：

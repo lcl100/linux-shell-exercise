@@ -1,6 +1,8 @@
 # script079
 ## 题目
 
+> 注：题目来源于 [SHELL22 处理文本 ](https://www.nowcoder.com/practice/908d030e676a4fac997a127bfe63da64?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 
 假设我们有一个 `nowcoder.txt`，假设里面的内容如下：
 

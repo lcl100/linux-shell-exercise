@@ -1,6 +1,8 @@
 # script086
 ## 题目
 
+> 注：题目来源于 [SHELL29 netstat练习1-查看各个状态的连接数 ](https://www.nowcoder.com/practice/f46a302d14e04b149bb50670f255293a?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设 netstat 命令运行的结果我们存储在 `nowcoder.txt` 里，格式如下：
 ```shell
 Proto Recv-Q Send-Q Local Address           Foreign Address         State

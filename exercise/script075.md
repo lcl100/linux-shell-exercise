@@ -1,6 +1,8 @@
 # script075
 ## 题目
 
+> 注：题目来源于 [SHELL18 域名进行计数排序处理 ](https://www.nowcoder.com/practice/f076c0a3c1274cbe9d615e0f3fd965f1?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设我们有一些域名，存储在 `nowcoder.txt` 里，现在需要你写一个脚本，将域名取出并根据域名进行计数排序处理。
 
 假设nowcoder.txt内容如下：

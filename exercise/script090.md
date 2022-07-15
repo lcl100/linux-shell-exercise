@@ -1,6 +1,8 @@
 # script090
 ## 题目
 
+> 注：本题来源于 [SHELL33 业务分析-提取值 ](https://www.nowcoder.com/practice/f144e52a3e054426a4d265ff38399748?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设我们的日志 `nowcoder.txt` 里，内容如下
 
 ```text

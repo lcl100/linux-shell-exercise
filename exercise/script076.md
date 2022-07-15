@@ -1,8 +1,8 @@
-
-
 # script076
 
 ## 题目
+
+> 注：题目来源于 [SHELL19 打印等腰三角形](https://www.nowcoder.com/practice/1c55ca2b73a34e80bafd5978810dd8ea?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
 
 打印边长为5的等腰三角形。
 

@@ -1,6 +1,8 @@
 # script063
 ## 题目
 
+> 题目来源于 [SHELL5 打印空行的行号 ](https://www.nowcoder.com/practice/030fc368e42e44b8b1f8985a8d6ad255?tpId=195&tags=&title=&difficulty=&judgeStatus=&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195&gioEnter=menu)。
+
 写一个 bash 脚本以输出一个文本文件 `nowcoder.txt` 中空行的行号，可能连续，从1开始。
 
 示例，假设 nowcoder.txt 内容如下：

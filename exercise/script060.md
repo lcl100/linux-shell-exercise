@@ -1,6 +1,8 @@
 # script060
 ## 题目
 
+> 注：题目来源于 [SHELL2 打印文件的最后5行](https://www.nowcoder.com/practice/ff6f36d357d24ce5a0eb817a0ef85ee2?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 经常查看日志的时候，会从文件的末尾往前查看，于是请你写一个 bash 脚本以输出一个文本文件 `nowcoder.txt` 中的最后 `5` 行。
 
 示例，假设 `nowcoder.txt` 内容如下：

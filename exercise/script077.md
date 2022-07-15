@@ -1,6 +1,8 @@
 # script077
 ## 题目
 
+> 注：题目来源于 [SHELL20 打印只有一个数字的行](https://www.nowcoder.com/practice/296c2785e64c46b7ae4c76bf190c2072?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设我们有一个 `nowcoder.txt`，现在需要你写脚本，打印只有一个数字的行。假设 `nowcoder.txt` 内容如下
 ```text
 haha

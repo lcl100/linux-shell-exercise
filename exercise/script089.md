@@ -1,6 +1,8 @@
 # script089
 ## 题目
 
+> 注：题目来源于 [SHELL32 netstat练习4-输出和3306端口建立连接总的各个状态的数目 ](https://www.nowcoder.com/practice/5ce76fd1513d4eacae68ad3b2aca1fbb?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设 netstat 命令运行的结果我们存储在 `nowcoder.txt` 里，格式如下：
 
 ```text

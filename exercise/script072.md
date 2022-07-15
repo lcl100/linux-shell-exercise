@@ -1,6 +1,8 @@
 # script072
 ## 题目
 
+> 注：题目来源于 [SHELL14 求平均值](https://www.nowcoder.com/practice/c44b98aeaf9942d3a61548bff306a7de?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个bash脚本以实现一个需求，求输入的一个的数组的平均值。
 
 第 1 行为输入的数组长度 N；第 2~N 行为数组的元素，如以下为：数组长度为 4，数组元素为 1 2 9 8。示例：

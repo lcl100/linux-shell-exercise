@@ -1,5 +1,7 @@
-# script0
+# script082
 ## 题目
+
+> 注：题目来源于 [SHELL25 nginx日志分析3-统计访问3次以上的IP ](https://www.nowcoder.com/practice/e1846855de79495fbb017b8ddf6ba969?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
 
 假设 nginx 的日志我们存储在 `nowcoder.txt` 里，格式如下：
 

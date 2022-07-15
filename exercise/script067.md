@@ -1,6 +1,8 @@
 # script067
 ## 题目
 
+> 题目来源于 [SHELL9 统计每个单词出现的个数 ](https://www.nowcoder.com/practice/ad921ccc0ba041ea93e9fb40bb0f2786?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash脚本以统计一个文本文件 `nowcoder.txt` 中每个单词出现的个数。
 
 为了简单起见，你可以假设：

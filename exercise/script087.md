@@ -1,6 +1,8 @@
 # script087
 ## 题目
 
+> 注：题目来源于 [SHELL30 netstat练习2-查看和3306端口建立的连接](https://www.nowcoder.com/practice/534b95941ffb495b9ba57fbfc3cd723a?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 假设 netstat 命令运行的结果我们存储在 `nowcoder.txt` 里，格式如下：
 ```text
 Proto Recv-Q Send-Q Local Address           Foreign Address         State

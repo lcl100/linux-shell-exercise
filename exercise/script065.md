@@ -1,6 +1,8 @@
 # script065
 ## 题目
 
+> 题目来源于 [SHELL7 打印字母数小于8的单词 ](https://www.nowcoder.com/practice/bd5b5d4b93a04226a81afbabf0be797d?tpId=195&tags=&title=&difficulty=0&judgeStatus=0&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195)。
+
 写一个 bash脚本以统计一个文本文件 `nowcoder.txt` 中字母数小于 `8` 的单词。
 
 示例，假设 nowcoder.txt 内容如下：

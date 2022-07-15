@@ -1,6 +1,8 @@
 # script074
 ## 题目
 
+> 注：题目来源于 [SHELL17 将字段逆序输出文件的每行 ](https://www.nowcoder.com/practice/e33fff83fd384a21ba67f3104fb8d646?tpId=195&tags=&title=&difficulty=&judgeStatus=&rp=1&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3DSHELL%25E7%25AF%2587%26topicId%3D195&gioEnter=menu)。
+
 将字段逆序输出文件 `nowcoder.txt` 的每一行，其中每一字段都是用英文冒号 `:` 相分隔。假设 `nowcoder.txt` 内容如下：
 ```text
 nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false
