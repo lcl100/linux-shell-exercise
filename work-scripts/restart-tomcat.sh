@@ -1,13 +1,15 @@
 #!/bin/bash
 
-## 日志文件的路径
-LOG_PATH="/root/.ssh/log/script.log"
+# 重启当前消费者服务器的tomcat
+# 注意，远程启动其他服务器上的tomcat可能会有环境变量的问题
 
+# tomcat的安装路径，务必保证本地服务器和远程服务器上的 tomcat 路径一致
+TOMCAT_PATH=/home/apache-tomcat-8.5.13
+# 存有远程服务器IP地址列表的文件
+HOSTS_PATH=/root/.ssh/hostlist
+# 日志文件的路径
+LOG_PATH=/root/.ssh/log/script.log
 
-# 函数：根据指定路径创建空文件。如果路径不存在则先创建路径所表示的目录再创建文件；如果已经存在则不进行任何操作。
-# 参数：
-#   - path: 空文件路径。必选。
-# 使用：`create_empty_file /root/.ssh/log/script.log`
 function create_empty_file() {
     if [ $# -ne 1 ]; then
         exit 1
@@ -25,149 +27,31 @@ function create_empty_file() {
     fi
 }
 
-# 函数：在当前服务器下创建空目录，如果目录存在则不进行任何操作，否则创建空目录
-# 参数：
-#   - path: 目录路径。必选。
-# 使用：`mkdir /root/.ssh/backup`
-function mkdir_local() {
-    if [ $# -ne 1 ]; then
-        LOG_ERROR "Please input a parameter."
-        return 1
-    fi
-    local path="$1"
-    # 如果路径已经存在并且是一个目录则不做任何操作
-    if [ -d "${path}" ]; then
-        LOG_INFO "The directory(${path}) already exists."
-        return 0
-    fi
-    # 如果路径不存在，则创建为目录
-    mkdir -p "${path}"
-}
-
-# 函数：在远程服务器下创建空目录，如果目录存在则不进行任何操作，否则创建空目录
-# 参数：
-#   - host: 远程服务器IP地址。必选。
-#   - path: 目录路径。必选。
-# 使用：`mkdir 192.168.3.3 /root/.ssh/backup`
-function mkdir_remote() {
-    if [ $# -ne 2 ]; then
-        LOG_ERROR "Please input two parameters."
-        return 1
-    fi
-    local host="$1"
-    local path="$2"
-    # 测试IP地址是否可用
-    local ip_result
-    ip_result=$(ping_ip "${host}")
-    if [ "${ip_result}" -eq 1 ]; then
-        LOG_ERROR "The host(${host}) is unavailable."
-        return 1
-    fi
-    # 如果在远程服务器中该路径已经存在并且是一个目录则不做任何操作
-    ssh root@"${host}" ls "${path}" > /dev/null
-    if [ $? -eq 0 ]; then
-        LOG_INFO "The directory(${path}) already exists on remote(${host}) server."
-        return 0
-    else
-        # 如果路径不存在，则创建为目录
-        ssh root@"${host}" mkdir -p "${path}"
-        if [ $? -eq 0 ]; then
-            LOG_INFO "Created successfully: ${host}"
-            return 0
-        else
-            LOG_ERROR "Failed to create: ${host}"
-            return 1
-        fi
-    fi
-}
-
-# 函数：测试指定IP是否有效
-# 参数：
-#   - ip: 指定主机的IP地址。必选。
-# 返回值：
-#   - status_code: 状态码，如果返回 0 表示可用；返回 1 表示不可用。
-# 使用：`ping_ip 192.168.3.3`
-function ping_ip() {
-    if [ $# -ne 1 ]; then
-        LOG_ERROR "Please input a parameter."
-        return 1
-    fi
-    local ip="$1"
-    ping -W 4 -c 2 "${ip}" > /dev/null
-    if [ $? -eq 0 ]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-# 函数：输出INFO级别的日志。不会输出到文件，如果想要同时输出到屏幕和文件中建议在主函数上使用 tee 命令。
-# 参数：
-#   - $*: 任何内容。可选。
-# 使用：`LOG_INFO "hello world"`
 function LOG_INFO() {
-    # 时间日期
     local date
     date=$(date "+%Y-%m-%d %H:%M:%S")
-    # 当前用户
     local username
     username=$(whoami)
-    # 脚本名
     local script_name
     script_name="$(basename $0)"
-    # 如果日志文件的路径不存在，则创建
     create_empty_file "$LOG_PATH"
-    # 输出日志到指定文件中
     echo "${date} ${username} [INFO] ${script_name}: $*"
 }
 
-# 函数：输出ERROR级别的日志。不会输出到文件，如果想要同时输出到屏幕和文件中建议在主函数上使用 tee 命令。
-# 参数：
-#   - $*: 任何内容。可选。
-# 使用：`LOG_ERROR "hello world"`
 function LOG_ERROR() {
-    # 时间日期
     local date
     date=$(date "+%Y-%m-%d %H:%M:%S")
-    # 当前用户
     local username
     username=$(whoami)
-    # 脚本名
     local script_name
     script_name="$(basename $0)"
-    # 如果日志文件的路径不存在，则创建
     create_empty_file "$LOG_PATH"
-    # 输出日志到指定文件中
     echo -e "${date} ${username} \e[1;31m[ERROR]\e[0m ${script_name}: $*"
-}
-
-# 函数：输出日期和时间
-# 返回值：
-#   - date_time: 当前日期和时间
-# 使用：`dt=$(date_time)`
-function date_time() {
-    local dt
-    dt=$(date "+%Y-%m-%d %H:%M:%S")
-    echo "${dt}"
-}
-
-# 函数：判断当前登录用户是否是root用户
-# 返回值：
-#   - code: 如果是超级用户则返回 0，否则返回 1 表示不是
-# 使用：`result=$(is_root_user)`
-function is_root_user() {
-    if [ $UID -eq 0 ]; then
-        return 0
-    else
-        return 1
-    fi
 }
 
 # 函数：获取 tomcat 的进程号。如果传入远程服务器的IP地址则获取远程服务器的tomcat进程号；如果没有则获取本服务器的tomcat进程号。
 # 参数：
 #   - host：远程服务器的 IP 地址。可选参数。
-# 返回值：
-#   - process_id: 启动的tomcat进程id
 # 使用：`get_tomcat_process_id` 或 `get_tomcat_process_id 1.123.34.68`
 # 注意：如果服务器中启动了多个 tomcat 进程，那么该函数并不适合
 function get_tomcat_process_id() {
@@ -312,15 +196,15 @@ function restart_tomcat(){
       # 先判断本地 tomcat 是否处于启动状态
       if [ -n "$(get_tomcat_process_id)" ]; then
         # 如果tomcat处于启动状态则先关闭再启动
-        close_tomcat > /dev/null
-        start_tomcat "$path" > /dev/null
+        close_tomcat
+        start_tomcat "$path"
       else
         # 如果tomcat处于关闭状态则启动
-        start_tomcat "$path" > /dev/null
+        start_tomcat "$path"
       fi
       # 判断是否重启成功
       if [ -n "$(get_tomcat_process_id)" ]; then
-        LOG_INFO "Restart local tomcat successfully."
+        LOG_INFO "Restart the local tomcat successfully."
       else
         LOG_ERROR "Failed to restart local tomcat."
       fi
@@ -329,71 +213,35 @@ function restart_tomcat(){
       # 先判断远程tomcat是否处于启动状态
       if [ -n "$(get_tomcat_process_id "${host}")" ]; then
         # 如果tomcat处于启动状态则先关闭再启动
-        close_tomcat "${host}" > /dev/null
-        start_tomcat "${path}" "${host}" > /dev/null
+        close_tomcat "${host}"
+        start_tomcat "${path}" "${host}"
       else
         # 如果tomcat处于关闭状态则启动
-        start_tomcat "${path}" "${host}" > /dev/null
+        start_tomcat "${path}" "${host}"
       fi
       # 判断是否重启成功
       if [ -n "$(get_tomcat_process_id "${host}")" ]; then
-        LOG_INFO "Restart remote(${host}) tomcat successfully."
+        LOG_INFO "Restart the remote(${host}) tomcat successfully."
       else
         LOG_ERROR "Failed to restart remote(${host}) tomcat."
       fi
   fi
 }
 
-# 函数：获取当前系统中硬盘空间最大使用率
-# 返回值：
-#   - max_usage: 当前系统中硬盘空间最大使用率
-# 使用：`max_usage=$(get_local_disk_max_usage)`
-function get_local_disk_max_usage() {
-    # 获取当前系统中硬盘空间最大使用率
-    local max_usage
-    max_usage=$(df -P | awk '{print $5}' | grep -E '[0-9]{1,3}' | tr -d "%" | sort -nr | head -n 1)
-    echo "$max_usage";
-}
+# 函数：脚本主启动函数
+main() {
+  # 重启本地服务器上的tomcat
+  restart_tomcat "$TOMCAT_PATH"
+  echo
 
-# 函数：获取远程服务器系统中硬盘空间最大使用率
-# 参数：
-#   - remote_host: 远程服务器的IP地址，保证是可用的。即在调用该函数之前先校验IP地址是否有效。
-# 返回值：
-#   - max_usage: 远程服务器中硬盘空间最大使用率
-# 使用：`max_usage=$(get_remote_disk_max_usage)`
-function get_remote_disk_max_usage() {
-    # 获取远程系统中硬盘空间最大使用率
-    local remote_host
-    remote_host="$1"
-    local max_usage
-    max_usage=$(ssh root@"${remote_host}" df -P | awk '{print $5}' | grep -E '[0-9]{1,3}' | tr -d % | sort -nr | head -n 1)
-    echo "$max_usage"
+  # 重启远程服务器上的tomcat
+  if [ -f "${HOSTS_PATH}" ]; then
+      local hosts
+      hosts=$(cat "$HOSTS_PATH")
+      for host in $hosts; do
+        restart_tomcat "$TOMCAT_PATH" "$host"
+        echo
+      done
+  fi
 }
-
-# 函数：获取当前主机的外网IP
-# 返回值：
-#   - external_ip: 当前主机的外网IP
-# 使用：`external_ip=$(get_local_external_ip)`
-function get_local_external_ip() {
-    local external_ip
-    external_ip=$(curl -s ip.sb)
-    echo "${external_ip}"
-}
-
-# 函数：获取远程主机的外网IP
-# 参数：
-#   - remote_ip: 远程主机的内网IP
-# 返回值：
-#   - external_ip: 远程主机的外网IP
-# 使用：`external_ip=$(get_remote_external_ip)`
-function get_remote_external_ip() {
-    if [ $# -ne 1 ]; then
-        LOG_ERROR "Please input a parameter."
-        exit 1
-    fi
-    local remote_host
-    remote_host="$1"
-    local external_ip
-    external_ip=$(ssh root@"${remote_host}" curl -s ip.sb)
-    echo "${external_ip}"
-}
+main 2>&1 | tee -a "$LOG_PATH"

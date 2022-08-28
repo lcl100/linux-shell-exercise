@@ -16,6 +16,8 @@ HOSTS_PATH="/root/.ssh/hostlist"
 DEST_DIR="/home/apache-tomcat-8.5.13/webapps/bill-system-1.0-SNAPSHOT"
 # 日志文件的路径
 LOG_PATH="/root/.ssh/log/script-test.log"
+# 对部署文件进行备份的路径
+BACKUP_PATH="/root/.ssh/backup/publish-file-backup"
 
 
 function create_empty_file() {
@@ -32,6 +34,80 @@ function create_empty_file() {
             mkdir -p "${parent_dir}"
             touch "${path}"
         fi
+    fi
+}
+
+# 函数：在当前服务器下创建空目录，如果目录存在则不进行任何操作，否则创建空目录
+# 参数：
+#   - path: 目录路径
+# 使用：`mkdir /root/.ssh/backup`
+function mkdir_local() {
+    if [ $# -ne 1 ]; then
+        LOG_ERROR "Please input a parameter."
+        exit 1
+    fi
+    local path="$1"
+    # 如果路径已经存在并且是一个目录则不做任何操作
+    if [ ! -d "${path}" ]; then
+        # 如果路径不存在，则创建为目录
+        mkdir -p "${path}"
+    fi
+}
+
+# 函数：在远程服务器下创建空目录，如果目录存在则不进行任何操作，否则创建空目录
+# 参数：
+#   - host: 远程服务器IP地址
+#   - path: 目录路径
+# 使用：`mkdir 192.168.3.3 /root/.ssh/backup`
+function mkdir_remote() {
+    if [ $# -ne 2 ]; then
+        LOG_ERROR "Please input two parameters."
+        exit 1
+    fi
+    local host="$1"
+    local path="$2"
+    # 测试IP地址是否可用
+    local ip_result
+    ip_result=$(ping_ip "${host}")
+    if [ "${ip_result}" -eq 1 ]; then
+        LOG_ERROR "The host(${host}) is unavailable."
+        return 1
+    fi
+    # 如果在远程服务器中该路径已经存在并且是一个目录则不做任何操作
+    ssh root@"${host}" ls "${path}" > /dev/null
+    if [ $? -eq 0 ]; then
+        LOG_INFO "The directory(${path}) already exists on remote(${host}) server."
+        return 0
+    else
+        # 如果路径不存在，则创建为目录
+        ssh root@"${host}" mkdir -p "${path}"
+        if [ $? -eq 0 ]; then
+            LOG_INFO "Created successfully: ${host}"
+            return 0
+        else
+            LOG_ERROR "Failed to create: ${host}"
+            return 1
+        fi
+    fi
+}
+
+# 函数：测试指定IP是否有效
+# 参数：
+#   - ip: 指定主机的IP地址
+# 返回值：
+#   - status_code: 状态码，如果返回 0 表示可用；返回 1 表示不可用。
+# 使用：`ping_ip 192.168.3.3`
+function ping_ip() {
+    if [ $# -ne 1 ]; then
+        LOG_ERROR "Please input a parameter."
+        exit 1
+    fi
+    local ip="$1"
+    ping -W 4 -c 2 "${ip}" > /dev/null
+    if [ $? -eq 0 ]; then
+        return 0
+    else
+        return 1
     fi
 }
 
@@ -90,7 +166,7 @@ function get_local_path() {
     local search_result_count
     search_result_count=$(find "${dest_dir}" -type f -name "${dest_name}" | wc -l)
     if [ "${search_result_count}" -gt 1 ]; then
-        LOG_ERROR "There are multiple query results: ${search_result}"
+        LOG_ERROR "Multiple query results: ${search_result}"
         exit 2
     elif [ "${search_result_count}" -eq 0 ]; then
         LOG_ERROR "Empty query result."
@@ -109,7 +185,7 @@ function publish_local_file() {
   fi
   local dir="$1"
   if [ ! -d "${dir}" ]; then
-      LOG_ERROR "\$1 is not a valid directory path: $1"
+      LOG_ERROR "\$1 isn't a valid directory path: $1"
       exit 1
   fi
   # 获取指定目录下的所有文件
@@ -129,19 +205,27 @@ function publish_local_file() {
           # 如果状态码等于 0 才表示查找该路径，否则不是
           local status_code="$?"
           if [ ${status_code} -eq 0 ]; then
+              # 在发布之前进行备份原文件
+              local backup_file_name
+              backup_file_name=$(date "+%Y%m%d-%H%M")
+              local backup_path
+              backup_path="${BACKUP_PATH}/${backup_file_name}"
+              mkdir_local "${backup_path}"
+              cp "${dest_path}" "${backup_path}"
+              # 备份之后再发布文件
               rm -rf "${dest_path}"
               cp "${src_path}" "${dest_path}"
               if [ $? -eq 0 ]; then
-                  LOG_INFO "Deploy file successfully: ${name}"
+                  LOG_INFO "本地服务器发布成功: ${name}"
               else
-                  LOG_ERROR "Failed to deploy file: ${name}"
+                  LOG_ERROR "本地服务器发布失败: ${name}"
               fi
           elif [ ${status_code} -eq 2 ]; then
-              LOG_ERROR "There are multiple files with the same name(${name}) in the directory(${DEST_DIR}), please handle them manually."
+              LOG_ERROR "有多个名字(${name})相同的文件位于(${DEST_DIR})目录下，请手动处理。"
           elif [ ${status_code} -eq 3 ]; then
-              LOG_ERROR "The file(${name}) does not exist in the specified directory(${DEST_DIR}), please deploy to the local server before publishing."
+              LOG_ERROR "文件(${name})不存在于特定目录(${DEST_DIR})，请在发布之前先部署一份到本地服务器中。"
           else
-              LOG_ERROR "Failed to deploy file: ${name}"
+              LOG_ERROR "本地服务器发布失败: ${name}"
           fi
       fi
   done
@@ -187,23 +271,24 @@ function publish_remote_file() {
                   # 检查待部署的文件所在目录在远程服务器上是否实际存在，如果不存在则进行创建
                   local path_dir
                   path_dir=$(ssh root@"${host}" dirname "${local_path}")
-                  if [ -d "${path_dir}" ]; then
+                  # 注，这里必须判断远程服务器上的路径是否是目录，如果是判断本地则会部署失败
+                  if ssh root@"${host}" [ -d "${path_dir}" ]; then
                       scp "${local_path}" root@"${host}":"${path_dir}"
                   else
                       ssh root@"${host}" mkdir -p "${path_dir}"
                       scp "${local_path}" root@"${host}":"${path_dir}"
                   fi
                   if [ $? -eq 0 ]; then
-                      LOG_INFO "The file(${name}) was successfully deployed on the remote(${host}) server."
+                      LOG_INFO "远程服务器(${host})发布成功: ${name}"
                   else
-                      LOG_ERROR "File(${name}) deployment failed on remote(${host}) server."
+                      LOG_ERROR "远程服务器(${host})发布失败: ${name}"
                   fi
               elif [ ${status_code} -eq 2 ]; then
-                  LOG_ERROR "There are multiple files with the same name(${name}) in the directory(${DEST_DIR}), please handle them manually."
+                  LOG_ERROR "有多个名字(${name})相同的文件位于(${DEST_DIR})目录下，请手动处理。"
               elif [ ${status_code} -eq 3 ]; then
-                  LOG_ERROR "The file(${name}) does not exist in the specified directory(${DEST_DIR}), please deploy to the local server before publishing."
+                  LOG_ERROR "文件(${name})不存在于特定目录(${DEST_DIR})，请在发布之前先部署一份到本地服务器中。"
               else
-                  LOG_ERROR "Failed to deploy file: ${name}"
+                  LOG_ERROR "远程服务器(${host})发布成功: ${name}"
               fi
           # 如果正好有 1 条，则删除远程服务器上的该文件，再进行部署
           elif [ ${remote_search_result_count} -eq 1 ]; then
@@ -211,19 +296,19 @@ function publish_remote_file() {
               # 检查待部署的文件所在目录在远程服务器上是否实际存在，如果不存在则进行创建
               local path_dir
               path_dir=$(ssh root@"${host}" dirname "${remote_search_result}")
-              if [ -d "${path_dir}" ]; then
+              if ssh root@"${host}" [ -d "${path_dir}" ]; then
                   scp "${remote_search_result}" root@"${host}":"${path_dir}"
               else
                   ssh root@"${host}" mkdir -p "${path_dir}"
                   scp "${remote_search_result}" root@"${host}":"${path_dir}"
               fi
               if [ $? -eq 0 ]; then
-                  LOG_INFO "The file(${name}) was successfully deployed on the remote(${host}) server."
+                  LOG_INFO "远程服务器(${host})发布成功: ${name}"
               else
-                  LOG_ERROR "File(${name}) deployment failed on remote(${host}) server."
+                   LOG_ERROR "远程服务器(${host})发布失败: ${name}"
               fi
           else
-              LOG_ERROR "File(${name}) deployment failed on remote(${host}) server, because there are multiple files with the same name(${name}) in the directory(${dest_dir}), please handle them manually."
+              LOG_ERROR "文件(${name})在远程服务器(${host})上发布失败，因为有多个同名文件(${name})位于目录(${dest_dir})中，请手动处理。"
           fi
       fi
   done
